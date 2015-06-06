@@ -392,14 +392,14 @@
 % badly with centering.  Hence dropping the box around the title in HTML:
 \ifhtml{%
 \begin{center}
-{\LARGE\bf Haskell 2010} \\[.1in]
+{\LARGE\bf Haskell 201x} \\[.1in]
 {\LARGE\bf Language Report} \\[.3in]
 \end{center}
 }{%
 \outline{
 \vspace{.3in}
 \begin{center}
-{\LARGE\bf Haskell 2010} \\[.1in]
+{\LARGE\bf Haskell 201x} \\[.1in]
 {\LARGE\bf Language Report} \\[.3in]
 \end{center}
 \vspace{.3in}
@@ -424,7 +424,7 @@ entirety, including this Notice. Modified versions of this Report may
 also be copied and distributed for any 
 purpose,
 provided that the modified version is clearly presented as such, and
-that it does not claim to be a definition of the language Haskell 2010.
+that it does not claim to be a definition of the language Haskell 201x.
 \end{titlepage}
 
 % ------------------------- Preface -----------------------------------
@@ -448,7 +448,7 @@ that it does not claim to be a definition of the language Haskell 2010.
 \startnewstuff
 \pagenumbering{arabic}
 
-\part{The Haskell 2010 Language}
+\part{The Haskell 201x Language}
 
 \input{intro}\startnewsection
 \input{lexemes}\startnewsection
@@ -469,7 +469,7 @@ that it does not claim to be a definition of the language Haskell 2010.
 
 % ------------------------- Part II: libraries report -----------------------------------
 
-\part{The Haskell 2010 Libraries}
+\part{The Haskell 201x Libraries}
 \label{libraries}
 
 \input{libs/Control-Monad}

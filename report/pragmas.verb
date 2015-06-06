@@ -86,13 +86,15 @@ with an error.
 In the interests of portability, multiple attempts to enable the same,
 supported language features (e.g. via command-line arguments,
 implementation-specific features dependencies or non-standard
-pragmas) are specifically permitted.  Haskell 2010 implementations that
+pragmas) are specifically permitted.  \hprime{Haskell 201x} implementations that
 support the @LANGUAGE@ pragma are required to support
+\begin{haskellprime}
 \bprog
 @
-{-# LANGUAGE Haskell2010 #-}
+{-# LANGUAGE Haskell201x #-}
 @
 \eprog
+\end{haskellprime}
 Those implementations are also encouraged to support the following
 named language features:
 \bprog

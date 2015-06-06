@@ -59,7 +59,7 @@ satisfied these constraints:
       programming languages.
 \end{enumerate}
 
-\section*{\Haskell{} 2010: language and libraries}
+\section*{\Haskell{} 201x: language and libraries}
 
 The committee intended that \Haskell{} would serve as a basis for
 future research in language design, and hoped that extensions or
@@ -96,22 +96,20 @@ revision to be created in this way, and new revisions are expected
 once per year.
 \end{haskellprime}
 
-\section*{Extensions to \Haskell{} 98}
+\section*{Extensions to \Haskell{} 2010}
 
 \begin{haskellprime}
-The most significant language changes in \Haskell{} 2010 relative to
-\Haskell{} 98 are listed here.
+The most significant language changes in \Haskell{} 201x relative to
+\Haskell{} 2010 are listed here.
 
 New language features:
 \begin{itemize}
-\item A Foreign Function Interface (FFI).
-\item Hierarchical module names, e.g. @Data.Bool@.
-\item Pattern guards.
+\item \ldots
 \end{itemize}
 
 Removed language features:
 \begin{itemize}
-\item The $(n+k)$ pattern syntax.
+\item \ldots
 \end{itemize}
 
 \end{haskellprime}
