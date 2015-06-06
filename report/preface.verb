@@ -74,7 +74,6 @@ needed; this became ``\Haskell{} 98'' and was published in February
 1999.  The fixing of minor bugs led to the \emph{Revised} \Haskell{} 98 Report
 in 2002.
 
-\begin{haskellprime}
 At the 2005 \Haskell{} Workshop, the consensus was that so many extensions
 to the official language were widely used (and supported by multiple
 implementations), that it was worthwhile to define another iteration of
@@ -94,6 +93,9 @@ incremental steps, each revision integrating only a small number of
 well-understood extensions and changes.  \Haskell{} 2010 is the first
 revision to be created in this way, and new revisions are expected
 once per year.
+
+\begin{haskellprime}
+\ldots
 \end{haskellprime}
 
 \section*{Extensions to \Haskell{} 2010}
@@ -110,6 +112,16 @@ New language features:
 Removed language features:
 \begin{itemize}
 \item \ldots
+\end{itemize}
+
+New library features:
+\begin{itemize}
+\item Introduce new @Applicative@ typeclass as a superclass for @Monad@
+\end{itemize}
+
+Removed library features:
+\begin{itemize}
+\item Removed @Ord@/@Eq@ superclass constraint from @Num@
 \end{itemize}
 
 \end{haskellprime}

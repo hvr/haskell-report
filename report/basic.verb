@@ -573,6 +573,34 @@ Instances of @Functor@ should satisfy the following laws:
 \ea\]\ifhtml{\\}{}
 All instances of @Functor@ defined in the Prelude satisfy these laws.
 
+\subsubsection{The Applicative Class}
+\label{applicative-class}
+\indexclass{Applicative}
+\indextt{pure}
+\indextt{<*>}
+\indextt{*>}
+\indextt{<*}
+\index{applicative}
+
+\begin{haskellprime}
+
+\bprog
+@
+class  Functor f => Applicative f  where
+    pure    :: a -> f a
+    (<*>)   :: f (a -> b) -> f a -> f b
+
+    (*>)    :: f a -> f b -> f b
+    u *> v  = pure (const id) <*> v <*> u
+
+    (<*)    :: f a -> f b -> f a
+    u <* v  = pure const <*> u <*> v
+@
+\eprog
+
+FIXME: write me
+
+\end{haskellprime}
 
 \subsubsection{The Monad Class}
 \label{monad-class}
@@ -584,12 +612,14 @@ All instances of @Functor@ defined in the Prelude satisfy these laws.
 \index{monad}
 \bprog
 @
-class  Monad m  where
+class  Applicative m => Monad m  where
     (>>=)   :: m a -> (a -> m b) -> m b
     (>>)    :: m a -> m b -> m b
-    return  :: a -> m a
     fail    :: String -> m a
 
+    return  :: a -> m a
+    return  = pure
+    
     m >> k  =  m >>= \_ -> k
     fail s  = error s
 @
@@ -742,7 +772,7 @@ built-in types that are instances of the numeric classes.
 \begin{figure}[tb]
 \begin{outlineenv}
 @
-class  (Eq a, Show a) => Num a  where
+class  Num a  where
     (+), (-), (*)  :: a -> a -> a
     negate         :: a -> a
     abs, signum    :: a -> a
