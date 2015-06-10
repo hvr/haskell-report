@@ -13,9 +13,9 @@ which do not form part of the \Haskell{} language proper and do not
 change a program's semantics.  This chapter summarizes this existing
 practice.  An implementation is not required to respect any pragma,
 although pragmas that are not recognised by the implementation should
-be ignored.  \hprime{Implementations are strongly encouraged to support the
+be ignored.  Implementations are strongly encouraged to support the
 LANGUAGE pragma described below as there are many language extensions
-being used in practice.}
+being used in practice.
 
 Lexically, pragmas appear as comments, except that the enclosing
 syntax is @{-#@ @#-}@.
@@ -63,8 +63,6 @@ overloaded numeric operations.
 
 \subsection{Language extensions}
 
-\begin{haskellprime}
-
 The @LANGUAGE@ pragma is a file-header pragma. A file-header pragma must
 precede the module keyword in a source file. There can be as many
 file-header pragmas as you please, and they can be preceded or
@@ -105,7 +103,5 @@ EmptyDataDecls, ForeignFunctionInterface
 \eprog
 These are the named language extensions supported by some pre-Haskell
 2010 implementations, that have been integrated into this report.
-
-\end{haskellprime}
 
 %**~footer

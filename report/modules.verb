@@ -69,14 +69,13 @@ Because they are allowed to be mutually recursive,
 modules allow a program to be partitioned freely without regard to
 dependencies.
 
-\begin{haskellprime}
 A module name (lexeme "modid") is a sequence of one or more
 identifiers beginning with capital letters, separated by dots, with no
 intervening spaces.  For example, @Data.Bool@, @Main@ and
 @Foreign.Marshal.Alloc@ are all valid module names.
 
 @@@
-modid   ->  \hprime{\{conid @.@\}} conid	& (\tr{modules})
+modid   ->  \{conid @.@\} conid	& (\tr{modules})
 @@@
 \indexsyn{modid}%
 
@@ -86,7 +85,6 @@ name.  For example, the module @Control.Monad.ST@ is a child of the
 @Control.Monad@ sub-hierarchy.  This is purely a convention, however,
 and not part of the language definition; in this report a "modid" is
 treated as a single identifier occupying a flat namespace.
-\end{haskellprime}
 
 There is one distinguished module, @Prelude@, which is imported into
 all modules by default (see Section~\ref{standard-prelude}), plus a

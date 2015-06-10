@@ -4,8 +4,6 @@
 \label{fixity-resolution}
 \index{fixity@@resolution}
 
-\begin{haskellprime}
-
 The following is an example implementation of fixity resolution for
 Haskell expressions.  Fixity resolution also applies to Haskell
 patterns, but patterns are a subset of expressions so in what follows
@@ -137,7 +135,5 @@ Note that this algorithm is insensitive to the range and resolution of
 precedences.  There is no reason in principle that Haskell should be
 limited to integral precedences in the range 1 to 10; a larger range,
 or fractional values, would present no additional difficulties.
-
-\end{haskellprime}
 
 %**~footer

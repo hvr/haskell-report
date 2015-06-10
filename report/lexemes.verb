@@ -148,7 +148,7 @@ comment in that code will interfere with the nested comments.
 varid	-> (small \{small | large | digit | @'@ \})_{\langle{}reservedid\rangle{}}
 conid		-> large \{small | large | digit | @'@ \} 
 reservedid -> @case@ | @class@ | @data@ | @default@ | @deriving@ | @do@ | @else@
-	| \hprime{@foreign@} | @if@ | @import@ | @in@ | @infix@ | @infixl@
+	| @foreign@ | @if@ | @import@ | @in@ | @infix@ | @infixl@
         | @infixr@ | @instance@ | @let@ | @module@ | @newtype@ | @of@
         | @then@ | @type@ | @where@ | @_@
 @@@
@@ -172,8 +172,8 @@ identifiers beginning with underscore.  This allows programmers to use
 ``@_foo@'' for a parameter that they expect to be unused.
 
 @@@
-varsym		-> ( \hprime{symbol_{\langle{}@:@\rangle} \{symbol\}} )_{\langle{}reservedop | dashes\rangle{}}
-consym		-> ( \hprime{@:@ \{symbol\}})_{\langle{}reservedop\rangle{}}
+varsym		-> ( symbol_{\langle{}@:@\rangle} \{symbol\} )_{\langle{}reservedop | dashes\rangle{}}
+consym		-> ( @:@ \{symbol\})_{\langle{}reservedop\rangle{}}
 reservedop	-> @..@ | @:@ | @::@ | @=@ | @\@ | @|@ | @<-@ | @->@ | \verb+@@+ | @~@ | @=>@
 @@@
 \indexsyn{varsym}%
@@ -208,7 +208,7 @@ conid		       && (\tr{constructors})
 tyvar	->  varid	& (\tr{type variables})
 tycon	->  conid 	& (\tr{type constructors})
 tycls	->  conid 	& (\tr{type classes})
-modid   ->  \hprime{\{conid @.@\}} conid & (\tr{modules})
+modid   ->  \{conid @.@\} conid & (\tr{modules})
 @@@
 \indexsyn{varid}%
 \indexsyn{conid}%
@@ -220,7 +220,7 @@ modid   ->  \hprime{\{conid @.@\}} conid & (\tr{modules})
 Variables and type variables are represented by identifiers beginning
 with small letters, and the others by identifiers beginning with
 capitals; also, variables and constructors have infix forms, the other
-four do not.  \hprime{Module names are a dot-separated sequence of "conid"s}.
+four do not.  Module names are a dot-separated sequence of "conid"s.
  Namespaces are also discussed in Section~\ref{namespaces}.
 
 \index{qualified name}

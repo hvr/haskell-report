@@ -24,7 +24,7 @@ body   -> @{@ impdecls @;@ topdecls @}@
 
 topdecls -> topdecl_1 @;@ ... @;@ topdecl_n 	& (n>=1)
 topdecl	-> @type@ simpletype @=@ type
-	|  @data@ [context @=>@] simpletype \hprime{[}@=@ constrs\hprime{]} [deriving]
+	|  @data@ [context @=>@] simpletype [@=@ constrs] [deriving]
         |  @newtype@ [context @=>@] simpletype @=@ newconstr [deriving]
 	|  @class@ [scontext @=>@] tycls tyvar [@where@ cdecls]
 	|  @instance@ [scontext @=>@] qtycls inst [@where@ idecls]
@@ -34,7 +34,7 @@ topdecl	-> @type@ simpletype @=@ type
 
 decls	-> @{@ decl_1 @;@ ... @;@ decl_n @}@		& (n>=0)
 decl	-> gendecl
-	|  (funlhs | \hprime{pat}) rhs
+	|  (funlhs | pat) rhs
 
 cdecls	-> @{@ cdecl_1 @;@ ... @;@ cdecl_n @}@		& (n>=0)
 cdecl	-> gendecl
@@ -480,7 +480,7 @@ the top level of a module.
 \label{datatype-decls}
 
 @@@
-topdecl	   -> @data@ [context @=>@] simpletype \hprime{[}@=@ constrs\hprime{]} [deriving]
+topdecl	   -> @data@ [context @=>@] simpletype [@=@ constrs] [deriving]
 
 simpletype -> tycon tyvar_1 ... tyvar_k	 & (k>=0) 
 
@@ -514,7 +514,7 @@ An algebraic datatype declaration has the form:
 where "cx" is a context.
 %\index{context!in data declaration@@in {\tt data} declaration}
 This declaration
-introduces a new {\em type constructor} "T" with \hprime{zero} or more constituent {\em data
+introduces a new {\em type constructor} "T" with zero or more constituent {\em data
 constructors} "K_1, ..., K_n".
 \index{data constructor}\index{type constructor}
 In this Report, the unqualified term ``constructor'' always means ``data constructor''.
@@ -1522,21 +1522,21 @@ fixity declaration.)
 \index{function binding}\index{pattern binding}
 
 @@@
-decl	->  (funlhs | \hprime{pat}) rhs
+decl	->  (funlhs | pat) rhs
 
 funlhs	->  var apat \{ apat \}
-        |   \hprime{pat varop pat}
+        |   pat varop pat
 	|   @(@ funlhs @)@  apat \{ apat \}
 
 rhs	->  @=@ exp [@where@ decls]
 	|   gdrhs [@where@ decls]
 
-gdrhs	->  \hprime{guards @=@ exp [gdrhs]}
+gdrhs	->  guards @=@ exp [gdrhs]
 
-\hprime{guards}	->  \hprime{@|@ guard_1, ..., guard_n}             & \hprime{(n>=1)}
+guards	->  @|@ guard_1, ..., guard_n & (n>=1)
 
-\indexsyn{guard}\hprime{guard}	-> \hprime{pat @<-@ infixexp} 	& (\hprime{\tr{pattern guard}})
-         | \hprime{@let@ decls}		& (\hprime{\tr{local declaration}})
+\indexsyn{guard}guard	-> pat @<-@ infixexp 	& (\tr{pattern guard})
+         | @let@ decls		& (\tr{local declaration})
          | infixexp		& (\tr{boolean guard})
 @@@
 \indexsyn{decl}%
@@ -1547,7 +1547,7 @@ gdrhs	->  \hprime{guards @=@ exp [gdrhs]}
 \indexsyn{guard}%
 
 We distinguish two cases within this syntax: a {\em pattern binding}
-occurs when the left hand side is a \hprime{"pat"}; 
+occurs when the left hand side is a "pat"; 
 otherwise, the binding is called a {\em function
 binding}.  Either binding may appear at the top-level of a module or
 within a @where@ or @let@ construct.  
@@ -1569,9 +1569,9 @@ general form:
 or
 \[\ba{lll}
 
-"@|@ \hprime{gs_{i1}}"   & "@=@ e_{i1} " \\
+"@|@ gs_{i1}"   & "@=@ e_{i1} " \\
 "..." \\
-"@|@ \hprime{gs_{im_i}}" & "@=@ e_{im_i}" \\
+"@|@ gs_{im_i}" & "@=@ e_{im_i}" \\
                & \multicolumn{2}{l}{"@where {@ decls_i @}@"}
 \ea\]
 and where "n>=1", "1<=i<=n", "m_i>=1".  The former is treated
@@ -1597,8 +1597,6 @@ definitions are all equivalent:
 @
 \eprog
 
-\begin{haskellprime}
-
 Note that fixity resolution applies to the infix variants of the
 function binding in the same way as for expressions
 (Section~\ref{fixity-resolution}).  Applying fixity resolution to the
@@ -1614,8 +1612,6 @@ illegal:
 because @:@ has precedence 5, so the left hand side resolves to
 @(a ## x) : xs@, and this cannot be a pattern binding because @(a ## x)@
 is not a valid pattern.
-
-\end{haskellprime}
 
 \outline{
 \paragraph*{Translation:}
@@ -1648,10 +1644,10 @@ The {\em general} form of a pattern binding is "p match", where a
 "match" is the same structure as for function bindings above; in other
 words, a pattern binding is:
 \[\ba{rcl}
-"p" & "@|@ \hprime{gs_{1}}"   & "@=@ e_{1}" \\
-    & "@|@ \hprime{gs_{2}}"   & "@=@ e_{2}" \\
+"p" & "@|@ gs_{1}"   & "@=@ e_{1}" \\
+    & "@|@ gs_{2}"   & "@=@ e_{2}" \\
     & "..." \\
-    & "@|@ \hprime{gs_{m}}"   & "@=@ e_{m}" \\
+    & "@|@ gs_{m}"   & "@=@ e_{m}" \\
     & \multicolumn{2}{l}{"@where {@ decls @}@"}
 \ea\]
 
@@ -1665,12 +1661,12 @@ The pattern binding above is semantically equivalent to this
 simple pattern binding:
 \[\ba{lcl}
 "p" &@=@& "@let@ decls @in@" \\
-    &   & \hprime{@case () of @} \\
-    &   & \hprime{"@  () | @gs_{1}@ -> @e_{1}"} \\
-    &   & \hprime{"@     | @gs_{2}@ -> @e_{2}"} \\
-    &   & \hprime{"@       @..."} \\
-    &   & \hprime{"@     | @gs_{m}@ -> @e_{m}"} \\
-    &   & \hprime{"@  _ -> error "Unmatched pattern"@"}
+    &   & @case () of @ \\
+    &   & "@  () | @gs_{1}@ -> @e_{1}" \\
+    &   & "@     | @gs_{2}@ -> @e_{2}" \\
+    &   & "@       @..." \\
+    &   & "@     | @gs_{m}@ -> @e_{m}" \\
+    &   & "@  _ -> error "Unmatched pattern"@"
 \ea\]
 }
 
@@ -1687,12 +1683,10 @@ are discussed in this section.
 \subsubsection{Dependency Analysis}
 \label{depend-anal}
 
-In general the static semantics are given by \hprime{applying} the
+In general the static semantics are given by applying the
 normal Hindley-Milner\index{Hindley-Milner type system} inference
-rules.  \hprime{In order to increase polymorphism, these rules are applied to
-groups of bindings identified by a \emph{dependency analysis}.}
-
-\begin{haskellprime}
+rules.  In order to increase polymorphism, these rules are applied to
+groups of bindings identified by a \emph{dependency analysis}.
 
 A binding "b1" \emph{depends} on a binding "b2" in the same list of
 declarations if either
@@ -1708,8 +1702,6 @@ bindings. Hindley-Milner type inference is applied to each declaration
 group in dependency order. The order of declarations in @where@/@let@
 constructs is irrelevant.
 
-\end{haskellprime}
-
 % Notes: from http://hackage.haskell.org/trac/haskell-prime/wiki/RelaxedDependencyAnalysis
 % 
 %     * also tightens up the original wording, which didn't mention that the declarations had to be in the same list and also defined declaration group but not dependency.
@@ -1721,8 +1713,6 @@ constructs is irrelevant.
 
 \subsubsection{Generalization}
 \label{generalization}
-
-\begin{haskellprime}
 
 The Hindley-Milner type system assigns types to a let-expression in two stages:
 
@@ -1736,8 +1726,6 @@ generalization.
 
 \item Finally, the body of the let-expression is typed.
 \end{enumerate}
-
-\end{haskellprime}
 
 % Notes: from http://hackage.haskell.org/trac/haskell-prime/wiki/RelaxedDependencyAnalysis
 % 

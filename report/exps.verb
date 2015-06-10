@@ -20,16 +20,16 @@ scope where the list comprehension is used, and (if it is in scope)
 what it is bound to.
 
 @@@
-exp     ->  \hprime{infixexp @::@ [context @=>@] type}   & (\tr{expression type signature})
-        |   \hprime{infixexp}
+exp     ->  infixexp @::@ [context @=>@] type   & (\tr{expression type signature})
+        |   infixexp
 
-\hprime{infixexp} -> \hprime{lexp qop infixexp} & (\tr{infix operator application})
-            | \hprime{@-@ infixexp}             & (\tr{prefix negation})
-            | \hprime{lexp}
+infixexp -> lexp qop infixexp & (\tr{infix operator application})
+            | @-@ infixexp             & (\tr{prefix negation})
+            | lexp
 
-\hprime{lexp}    ->  @\@ apat_1 ... apat_n @->@ exp	& (\tr{lambda abstraction}, n>=1)
+lexp    ->  @\@ apat_1 ... apat_n @->@ exp	& (\tr{lambda abstraction}, n>=1)
 	|   @let@ decls @in@ exp	        & ({\tr{let expression}})
-	|   @if@ exp \hprime{[@;@]} @then@ exp \hprime{[@;@]} @else@ exp & (\tr{conditional})
+	|   @if@ exp [@;@] @then@ exp [@;@] @else@ exp & (\tr{conditional})
 	|   @case@ exp @of@ @{@ alts  @}@	& (\tr{case expression})
 	|   @do@ @{@ stmts @}@        	        & (\tr{do expression})
 	|   fexp
@@ -43,8 +43,8 @@ aexp 	->  qvar				& (\tr{variable})
 	|   @[@ exp_1 @,@ ... @,@ exp_k @]@	& (\tr{list}, k>=1)
 	|   @[@ exp_1 [@,@ exp_2] @..@ [exp_3] @]@ & (\tr{arithmetic sequence})
 	|   @[@ exp @|@ qual_1 @,@ ... @,@ qual_n @]@	& (\tr{list comprehension}, n>=1)
-	|   @(@ \hprime{infixexp qop} @)@        & (\tr{left section})
-        |   @(@ \hprime{qop_{\langle@-@\rangle} infixexp} @)@        & (\tr{right section})
+	|   @(@ infixexp qop @)@        & (\tr{left section})
+        |   @(@ qop_{\langle@-@\rangle} infixexp @)@        & (\tr{right section})
         |   qcon @{@ fbind_1 @,@ ... @,@ fbind_n @}@ & (\tr{labeled construction}, n>=0)
         |   aexp_{\langle{}qcon\rangle{}} @{@ fbind_1 @,@ ... @,@ fbind_n @}@ & (\tr{labeled update}, n >= 1)
 
@@ -104,8 +104,8 @@ operator's fixity (see Section~\ref{fixity}).  Consecutive
 unparenthesized operators with the same precedence must both be either
 left or right associative to avoid a syntax error.
 Given an unparenthesized expression ``"x qop^{(a,i)} y qop^{(b,j)} z"'' 
-\hprime{(where "qop^{(a,i)}" means an operator with associativity "a" and
-precedence "i")}, parentheses must be added around either ``"x
+(where "qop^{(a,i)}" means an operator with associativity "a" and
+precedence "i"), parentheses must be added around either ``"x
 qop^{(a,i)} y"'' or ``"y qop^{(b,j)} z"'' when "i=j" unless "a=b={\rm
   l}" or "a=b={\rm r}".
 
@@ -331,9 +331,9 @@ pattern fails to match, then the result is "\bot".
 \label{operators}
 %
 @@@
-\hprime{infixexp} ->  \hprime{lexp qop infixexp}
-	|   @-@ \hprime{infixexp}		& (\tr{prefix negation})
-        |   \hprime{lexp}
+infixexp ->  lexp qop infixexp
+	|   @-@ infixexp		& (\tr{prefix negation})
+        |   lexp
 qop     ->  qvarop | qconop			& (\tr{qualified operator})
 @@@
 \indexsyn{exp}%
@@ -379,8 +379,8 @@ The following identities hold:
 \label{sections}
 %
 @@@
-aexp 	->   @(@ \hprime{infixexp qop} @)@        & (\tr{left section})
-        |   @(@ \hprime{qop_{\langle@-@\rangle} infixexp} @)@        & (\tr{right section})
+aexp 	->   @(@ infixexp qop @)@        & (\tr{left section})
+        |   @(@ qop_{\langle@-@\rangle} infixexp @)@        & (\tr{right section})
 @@@
 \indexsyn{infixexp}%
 \indexsyn{qop}%
@@ -457,7 +457,7 @@ that does not occur free in "e".
 \label{conditionals}\index{conditional expression}
 %
 @@@
-lexp ->  @if@ exp \hprime{[@;@]} @then@ exp \hprime{[@;@]} @else@ exp
+lexp ->  @if@ exp [@;@] @then@ exp [@;@] @else@ exp
 @@@
 \indexsyn{exp}%
 
@@ -772,10 +772,10 @@ alt	->  pat @->@ exp [@where@ decls]
 	|   pat gdpat [@where@ decls]
 	|					& (empty alternative)
 
-gdpat   ->  \hprime{guards} @->@ exp [ gdpat ]
-\hprime{guards}	->  \hprime{@|@ guard_1, ..., guard_n}             & \hprime{(n>=1)}
-\hprime{guard}	-> \hprime{pat @<-@ infixexp} 	& (\hprime{\tr{pattern guard}})
-         | \hprime{@let@ decls}		& (\hprime{\tr{local declaration}})
+gdpat   ->  guards @->@ exp [ gdpat ]
+guards	->  @|@ guard_1, ..., guard_n           & (n>=1)
+guard	-> pat @<-@ infixexp 	& (\tr{pattern guard})
+         | @let@ decls		& (\tr{local declaration})
          | infixexp		& (\tr{boolean guard})
 @@@
 \indexsyn{exp}%
@@ -792,9 +792,9 @@ A {\em case expression}\index{case expression} has the general form
 \]
 where each "match_i" is of the general form
 \[\ba{lll}
- & "@|@ \hprime{gs_{i1}}"   & "@->@ e_{i1}" \\
+ & "@|@ gs_{i1}"   & "@->@ e_{i1}" \\
  & "..." \\
- & "@|@ \hprime{gs_{im_i}}" & "@->@ e_{im_i}" \\
+ & "@|@ gs_{im_i}" & "@->@ e_{im_i}" \\
  & \multicolumn{2}{l}{"@where@ decls_i"}
 \ea\]
 (Notice that in the syntax rule for "guards", the ``@|@'' is a 
@@ -807,7 +807,6 @@ consists of a sequence of pairs of guards\index{guard}
 optional bindings ("decls_i") that scope over all of the guards and
 expressions of the alternative.
 
-\begin{haskellprime}
 \index{Pattern Guards}
 \index{guards}
 A {\em guard}\index{guard} has one of the following forms:
@@ -822,8 +821,6 @@ They succeed if the expression "e" matches the pattern "p", and introduce the bi
 \item {\em boolean guards}\index{boolean guard} are arbitrary expressions of
 type @Bool@.  They succeed if the expression evaluates to @True@, and they do not introduce new names to the environment.  A boolean guard, "g", is semantically equivalent to the pattern guard "@True <- @g".
 \end{itemize}
-\end{haskellprime}
-
 
 An alternative of the form
 \[
@@ -848,7 +845,6 @@ expression extended first by the bindings created during the matching
 of the pattern, and then by the "decls_i" in the @where@ clause
 associated with that alternative.
 
-\begin{haskellprime}
 For each guarded expression, the comma-separated guards are tried
 sequentially from left to right.  If all of them succeed, then the
 corresponding expression is evaluated in the environment extended with
@@ -857,7 +853,6 @@ introduced by a guard (either by using a let clause or a pattern
 guard) are in scope in the following guards and the corresponding
 expression.  If any of the guards fail, then this guarded expression
 fails and the next guarded expression is tried.
-\end{haskellprime}
 
 If none of the guarded expressions for a given alternative succeed,
 then matching continues with the next alternative.  If no alternative
@@ -1163,11 +1158,11 @@ defining the semantics of pattern matching for case expressions is sufficient.
 
 Patterns\index{pattern} have this syntax:
 @@@
-pat     -> \hprime{lpat qconop pat} & (\tr{infix constructor})
-        | \hprime{lpat}
+pat     -> lpat qconop pat & (\tr{infix constructor})
+        | lpat
 
-\hprime{lpat} ->  apat
-        | \hprime{@-@ (integer | float)} & (\tr{negative literal})
+lpat ->  apat
+        | @-@ (integer | float) & (\tr{negative literal})
 	|   gcon apat_1 ... apat_k		& (\tr{arity} gcon = k, k>=1)
 
 apat	->  var [{\tt @@} apat]			& (\tr{as pattern})
@@ -1482,11 +1477,11 @@ would generate rather inefficient code.
    &$=$@ case @$e'$@ of { @$y$@ ->@\\
    &@   case @$v$@ of {@\\
    &@     @$p$@ -> let { @$decls$@ } in@\\
-   &\hprime{@          case () of {@}\\
-   &\hprime{@            () | @$gs_1$@ -> @$e_1$@;@}\\
-   &\hprime{@            _ -> @$\ldots$@ case () of {@}\\
-   &\hprime{@                       () | @$gs_n$@ -> @$e_n$@;@}\\
-   &\hprime{@                       _  -> @$y$@ } @$\ldots$@ }@}\\
+   &@          case () of {@\\
+   &@            () | @$gs_1$@ -> @$e_1$@;@\\
+   &@            _ -> @$\ldots$@ case () of {@\\
+   &@                       () | @$gs_n$@ -> @$e_n$@;@\\
+   &@                       _  -> @$y$@ } @$\ldots$@ }@\\
    &@     _ -> @$y$@ }}@\\
    &{\rm where $y$ is a new variable}\\[4pt]
 %\\
@@ -1568,7 +1563,6 @@ $e'$ @ }@ \\
 
 \begin{figure}[tb]
 \outlinec{\small
-\begin{haskellprime}
 \begin{tabular}{@@{}cl}
 (s)&@case () of { () | @$g_1$@, @$\ldots$@, @$g_n$@ -> @$e$@; _ -> @$e'$@ }@\\
    &$=$@ case () of {@\\
@@ -1587,10 +1581,9 @@ $e'$ @ }@ \\
 (v)&@case () of { () | @$e_0$@ -> @$e$@; _ -> @$e'$@ }@\\
    &$=$@ if @$e_0$@ then @$e$@ else @$e'$\\[4pt]
 \end{tabular}
-\end{haskellprime}
 }
 %**<div align=center> <h4>Figure 3.3</h4> </div>
-\ecaption{\hprime{Semantics of Case Expressions, Part 3}}
+\ecaption{Semantics of Case Expressions, Part 3}
 \label{simple-case-expr-3}
 \end{figure}
 

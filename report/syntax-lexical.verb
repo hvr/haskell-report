@@ -42,7 +42,7 @@ uniLarge        -> \tr{any uppercase or titlecase Unicode letter}
 symbol		-> ascSymbol | uniSymbol_{\langle{}special | @_@ | @"@ | @'@\rangle{}}
 
 ascSymbol     -> @!@ | @#@ | @$@ | @%@ | @&@ | @*@ | @+@ | @.@ | @/@ | @<@ | @=@ | @>@ | @?@ | @@
-                |  @\@ | @^@ | @|@ | @-@ | @~@ \hprime{| @:@}
+                |  @\@ | @^@ | @|@ | @-@ | @~@ | @:@
 uniSymbol       -> \tr{any Unicode symbol or punctuation}
 digit          -> ascDigit | uniDigit
 ascDigit	-> @0@ | @1@ | ... | @9@
