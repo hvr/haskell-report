@@ -122,6 +122,7 @@ New library features:
 Removed library features:
 \begin{itemize}
 \item Removed @Ord@/@Eq@ superclass constraint from @Num@
+\item Removed @Num@ superclass constraint from @Bits@
 \end{itemize}
 
 \end{haskellprime}
