@@ -30,8 +30,9 @@ SPLITPGM = perl ../tools/splitAndIndexPgm
 RM    = rm -f
 CP    = cp
 LN    = ln -sf
-LATEX = latex
-PDFLATEX = pdflatex
+LATEX = latex -halt-on-error
+PDFLATEX = pdflatex -halt-on-error
+HTLATEX = htlatex
 BIBTEX = bibtex
 MAKEINDEX = makeindex
 
@@ -144,7 +145,7 @@ ht/classes.eps : classes.eps
 
 .PHONY: html
 html: $(HT_TEXS) ht/classes.eps ht/haddock.sty ht/haskell.bbl
-	cd ht && htlatex haskell.tex "haskell,2"
+	cd ht && $(HTLATEX) haskell.tex "haskell,2"
 
 # Grab the .bbl file from building the PDF version, so we get a bibliography
 # in the tex4ht version too.

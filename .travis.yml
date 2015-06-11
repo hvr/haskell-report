@@ -1,0 +1,13 @@
+language: haskell
+ghc: 7.8
+cache: apt
+
+install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -y texlive-latex-recommended texlive-fonts-recommended
+  - sudo apt-get install -y texlive-latex-extra chktex tex4ht
+
+script:
+  - make -C tools
+  - make -C report pdf
+  - make -C report html
